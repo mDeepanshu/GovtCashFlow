@@ -1,1 +1,2 @@
-<app-login-page></app-login-page>
+<app-login-page *ngIf="loginStatus==false" (loginEvent)="login($event)"></app-login-page>
+<app-tax-form *ngIf="loginStatus==true"></app-tax-form>

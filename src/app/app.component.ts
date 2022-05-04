@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GovtCashFlow';
+  loginStatus=true;
+  login(e: any) {
+    this.loginStatus = true;
+  }
 }

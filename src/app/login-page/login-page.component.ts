@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
+import { SharedService} from '../shared.service';
 
 @Component({
   selector: 'app-login-page',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mainService: SharedService) { }
+  @Output() loginEvent = new EventEmitter<boolean>();
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  login() {
+    this.loginEvent.emit(true);
   }
-
 }
