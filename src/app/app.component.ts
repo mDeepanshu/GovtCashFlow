@@ -1,14 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'GovtCashFlow';
-  loginStatus=true;
+  loginStatus = false;
+  constructor(private mainService: SharedService) {}
   login(e: any) {
     this.loginStatus = true;
+  }
+  ngOnInit() {
+    this.mainService.loginStatus.subscribe((value) => {
+      this.loginStatus = value;
+    });
   }
 }

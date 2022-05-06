@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaxField } from '../models/taxFields.model';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-tax-form',
@@ -8,7 +9,7 @@ import { TaxField } from '../models/taxFields.model';
   styleUrls: ['./tax-form.component.css'],
 })
 export class TaxFormComponent implements OnInit {
-  constructor() {}
+  constructor(private mainService: SharedService) {}
 
   onSubmit() {}
   TaxForm: FormGroup;
@@ -31,5 +32,7 @@ export class TaxFormComponent implements OnInit {
       }),
     });
   }
-  logout(){}
+  logout() {
+    this.mainService.loginStatus.next(false);
+  }
 }
