@@ -12,15 +12,16 @@ export class LoginPageComponent implements OnInit {
     private mainService: SharedService,
     private _snackBar: MatSnackBar
   ) {}
+  SignupForm: FormGroup;
 
   ngOnInit() {
     this.SignupForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
+      category: new FormControl(null, Validators.required),
       pan_number: new FormControl(null, Validators.required),
     });
   }
-  SignupForm: FormGroup;
   onSubmit() {
     this.mainService.signUp(this.SignupForm.value).then((data) => {
       if (data == 'successful_added') {
@@ -29,11 +30,21 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
-  login(username, password) {
-    this.mainService.login(username, password).then((data) => {
+  login(username, password, category) {
+    this.mainService.login(username, password, category).then((data) => {
       if (data == 'Authentication Successful') {
         // this.loginEvent.emit(true);
-        this.mainService.loginStatus.next(true);
+        switch (category) {
+          case 'client':
+            this.mainService.loginStatus.next(1);
+            break;
+          case 'department':
+            this.mainService.loginStatus.next(2);
+            break;
+          case 'admin':
+            this.mainService.loginStatus.next(3);
+            break;
+        }
       } else if (data == 'User not found') {
         this._snackBar.open('User not found', 'close');
       } else {
@@ -41,7 +52,6 @@ export class LoginPageComponent implements OnInit {
       }
     });
   }
-  signup() {}
   openNav() {
     document.getElementById('mySidebar').style.width = '250px';
     document.getElementById('main').style.marginLeft = '250px';

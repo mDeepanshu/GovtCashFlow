@@ -12,12 +12,14 @@ export class SharedService {
   // public url: string = 'http://192.168.1.8:3000';
   public url: string = 'http://localhost:3000';
   constructor(private http: HttpClient, public dialog: MatDialog) {}
-  loginStatus = new Subject<boolean>();
+  loginStatus = new Subject<number>();
 
-  login(userid, password) {
+  login(userid, password, category) {
     return new Promise((response, reject) => {
       this.http
-        .get(`${this.url}/client/login?username=${userid}&password=${password}`)
+        .get(
+          `${this.url}/client/login?username=${userid}&password=${password}&category=${category}`
+        )
         .subscribe((responseData: ResponseType) => {
           let isError = this.checkForErr(
             responseData.status,
@@ -31,7 +33,7 @@ export class SharedService {
         });
     });
   }
-  submitForm(form) {
+  submitClientForm(form) {
     return new Promise((response, reject) => {
       this.http
         .post(`${this.url}/client/formSubmit`, form)

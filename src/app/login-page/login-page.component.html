@@ -1,33 +1,54 @@
 <!-- <div class="main" id="main"> -->
+"client d d" "a a admin" "q q department"
 <div class="limiter">
   <div class="container-login100">
-    <div class="wrap-login100 p-t-85 p-b-20">
-      <!-- <form class="login100-form validate-form"> -->
-      <span class="login100-form-title p-b-70"> Welcome </span>
+    <div class="wrap-login100 p-t-35 p-b-20">
+      <!-- <span class="login100-form-title p-b-70"> Welcome </span> -->
       <span class="login100-form-avatar">
         <img src="../../assets/images/avatar-01.jpg" alt="AVATAR" />
       </span>
-
       <div
-        class="wrap-input100 validate-input m-t-85 m-b-35"
+        class="wrap-input100 validate-input m-t-65 m-b-35"
+        data-validate="Select"
+      >
+        <select class="input100" name="Client" id="cars" #category>
+          <option value="client">Client</option>
+          <option value="admin">Admin</option>
+          <option value="department">Department</option>
+        </select>
+        <span class="focus-input100"></span>
+      </div>
+      <div
+        class="wrap-input100 validate-input m-t-15 m-b-35"
         data-validate="Enter username"
       >
-        <input class="input100" type="text" name="username" #username />
-        <span class="focus-input100" data-placeholder="Username"></span>
+        <input
+          class="input100"
+          placeholder="username"
+          type="text"
+          name="username"
+          #username
+        />
+        <span class="focus-input100"></span>
       </div>
-
       <div
         class="wrap-input100 validate-input m-b-50"
         data-validate="Enter password"
       >
-        <input class="input100" type="password" name="pass" #password />
-        <span class="focus-input100" data-placeholder="Password"></span>
+        <input
+          class="input100"
+          placeholder="password"
+          type="password"
+          name="pass"
+          #password
+        />
+        <span class="focus-input100"></span>
       </div>
 
       <div class="container-login100-form-btn">
         <button
           class="login100-form-btn"
-          (click)="login(username.value, password.value)"
+          (click)="login(username.value, password.value, category.value)"
         >
           Login
         </button>
@@ -36,7 +57,7 @@
       <div class="container-login100-form-btn">
         <button class="login100-form-btn" (click)="openNav()">Sign Up</button>
       </div>
-      <ul class="login-more p-t-190">
+      <ul class="login-more p-t-30">
         <li class="m-b-8">
           <span class="txt1"> Forgot </span>
 
@@ -49,7 +70,6 @@
           <a href="#" class="txt2"> Sign up </a>
         </li>
       </ul>
-      <!-- </form> -->
     </div>
   </div>
 </div>
@@ -109,6 +129,23 @@
               formControlName="password"
               placeholder="Total Income"
             />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select
+              class="form-select"
+              formControlName="category"
+              name="Client"
+              #category
+            >
+              <option value="client">Client</option>
+              <option value="admin">Admin</option>
+              <option value="department">Department</option>
+            </select>
           </div>
         </div>
       </div>

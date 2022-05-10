@@ -8,10 +8,10 @@ import { SharedService } from './shared.service';
 })
 export class AppComponent implements OnInit {
   title = 'GovtCashFlow';
-  loginStatus = false;
+  loginStatus = 0;
   constructor(private mainService: SharedService) {}
   login(e: any) {
-    this.loginStatus = true;
+    this.loginStatus = 0;
   }
   ngOnInit() {
     this.mainService.loginStatus.subscribe((value) => {

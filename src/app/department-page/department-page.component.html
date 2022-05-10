@@ -1,0 +1,81 @@
+<div class="container-fluid p-2">
+  <div class="row">
+    <div class="col">New Transaction</div>
+  </div>
+  <hr />
+  <div class="row">
+    <form
+      [formGroup]="newTransaction"
+      (ngSubmit)="onSubmit()"
+      (keydown.enter)="$event.preventDefault()"
+      #aForm
+    >
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="receipent_id">Receipent ID</label>
+            <input
+              type="string"
+              class="form-control"
+              id="receipent_id"
+              formControlName="transaction_id"
+              placeholder="Receipent ID"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input
+              type="string"
+              class="form-control"
+              id="amount"
+              formControlName="transaction_amount"
+              placeholder="amount"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="details">Details</label>
+            <input
+              type="string"
+              class="form-control"
+              id="details"
+              formControlName="transaction_details"
+              placeholder="details"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-4">
+          <button class="btn btn-primary" type="submit">
+            Make Transaction
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col">Previous Transaction</div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="col-8 mt-1" *ngFor="let item of items">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.transaction_to }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            {{ item.transaction_id }}
+          </h6>
+          <p class="card-text">
+            Transaction Detial - {{ item.transaction_details }}.
+          </p>
+          <a href="#" class="card-link">{{ item.transaction_amount }}</a>
+          <a href="#" class="card-link">{{ item.transaction_datetime }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

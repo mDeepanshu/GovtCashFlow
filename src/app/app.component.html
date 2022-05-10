@@ -1,2 +1,5 @@
-<app-login-page *ngIf="loginStatus == false"></app-login-page>
-<app-tax-form *ngIf="loginStatus == true"></app-tax-form>
+<app-login-page *ngIf="loginStatus == 0"></app-login-page>
+<app-header *ngIf="loginStatus != 0"></app-header>
+<app-tax-form *ngIf="loginStatus == 1"></app-tax-form>
+<app-department-page *ngIf="loginStatus == 2"></app-department-page>
+<app-data *ngIf="loginStatus == 3"></app-data>

@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../shared.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaxField } from '../models/taxFields.model';
-import { SharedService } from '../shared.service';
-
 @Component({
-  selector: 'app-tax-form',
-  templateUrl: './tax-form.component.html',
-  styleUrls: ['./tax-form.component.css'],
+  selector: 'app-data',
+  templateUrl: './data.component.html',
+  styleUrls: ['./data.component.css'],
 })
-export class TaxFormComponent implements OnInit {
+export class DataComponent implements OnInit {
   constructor(private mainService: SharedService) {}
-
+  onSubmit() {}
   TaxForm: FormGroup;
   TaxFieldSet: TaxField;
+  items = ['lll', 'sdf'];
+  addField(value: string) {
+    this.items.push(value);
+  }
   ngOnInit() {
     this.TaxForm = new FormGroup({
       partyName: new FormControl(null),
@@ -32,11 +35,6 @@ export class TaxFormComponent implements OnInit {
     });
   }
   logout() {
-    this.mainService.loginStatus.next(1);
-  }
-  onSubmit() {
-    this.mainService.submitClientForm(this.TaxForm.value).then((value) => {
-      console.log(value);
-    });
+    this.mainService.loginStatus.next(3);
   }
 }

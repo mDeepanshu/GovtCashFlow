@@ -11,6 +11,9 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { TaxFormComponent } from './tax-form/tax-form.component';
 import { ErrMsgModuleComponent } from './err-msg-module/err-msg-module.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DataComponent } from './data/data.component';
+import { DepartmentPageComponent } from './department-page/department-page.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginPageComponent,
     TaxFormComponent,
     ErrMsgModuleComponent,
+    DataComponent,
+    DepartmentPageComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
