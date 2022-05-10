@@ -5,7 +5,7 @@
   <hr />
   <div class="row">
     <form
-      [formGroup]="newTransaction"
+      [formGroup]="newTransactionForm"
       (ngSubmit)="onSubmit()"
       (keydown.enter)="$event.preventDefault()"
       #aForm
@@ -18,6 +18,7 @@
               type="string"
               class="form-control"
               id="receipent_id"
+              [value]="reciepientID"
               formControlName="transaction_id"
               placeholder="Receipent ID"
             />
@@ -43,12 +44,17 @@
               class="form-control"
               id="details"
               formControlName="transaction_details"
-              placeholder="details"
+              placeholder="Details"
             />
           </div>
         </div>
       </div>
       <div class="row d-flex justify-content-center">
+        <div class="col-4">
+          <button class="btn btn-primary" type="button">
+            Verify Receipent
+          </button>
+        </div>
         <div class="col-4">
           <button class="btn btn-primary" type="submit">
             Make Transaction

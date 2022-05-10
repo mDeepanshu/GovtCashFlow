@@ -8,7 +8,7 @@ import { SharedService } from './shared.service';
 })
 export class AppComponent implements OnInit {
   title = 'GovtCashFlow';
-  loginStatus = 0;
+  loginStatus = 2;
   constructor(private mainService: SharedService) {}
   login(e: any) {
     this.loginStatus = 0;
