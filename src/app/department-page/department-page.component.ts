@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartmentTransaction } from '../models/departmentTransaction.model';
 import { SharedService } from '../shared.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-department-page',
@@ -9,9 +10,12 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./department-page.component.css'],
 })
 export class DepartmentPageComponent implements OnInit {
-  constructor(private mainService: SharedService) {}
+  constructor(
+    private mainService: SharedService,
+    private _snackBar: MatSnackBar
+  ) {}
   newTransactionForm: FormGroup;
-  reciepientID = '';
+  reciepientID;
   items: DepartmentTransaction[] = [
     {
       transaction_to: 'Deepanshu',
@@ -40,17 +44,17 @@ export class DepartmentPageComponent implements OnInit {
   ];
   ngOnInit() {
     this.newTransactionForm = new FormGroup({
-      transaction_id: new FormControl(0, Validators.required),
-      transaction_amount: new FormControl(0, Validators.required),
+      transaction_id: new FormControl(null, Validators.required),
+      transaction_amount: new FormControl(null, Validators.required),
       transaction_details: new FormControl(),
       transaction_datetime: new FormControl(),
     });
     //
-    this.mainService
-      .fetchDepartmentTransactions()
-      .then((data: DepartmentTransaction[]) => {
-        this.items = data;
-      });
+    // this.mainService
+    //   .fetchDepartmentTransactions()
+    //   .then((data: DepartmentTransaction[]) => {
+    //     this.items = data;
+    //   });
   }
   onSubmit() {
     console.log(this.newTransactionForm.value);
@@ -60,9 +64,17 @@ export class DepartmentPageComponent implements OnInit {
     this.mainService.loginStatus.next(2);
   }
   verifyReciepient() {
-    this.mainService.verifyReciepient(this.reciepientID).then((data) => {
-      console.log(data);
-    });
+    console.log(this.newTransactionForm.value.transaction_id);
+    this.mainService
+      .verifyReciepient(this.newTransactionForm.value.transaction_id)
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          this._snackBar.open('User Found', 'close');
+        } else {
+          this._snackBar.open('User Not Found', 'close');
+        }
+      });
   }
   newDepartmentTransaction() {
     this.newTransactionForm.setValue({

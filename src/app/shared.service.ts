@@ -15,6 +15,7 @@ export class SharedService {
   loginStatus = new Subject<number>();
   logedInId;
   login(userid, password, category) {
+    this.logedInId = userid;
     return new Promise((response, reject) => {
       this.http
         .get(
@@ -132,25 +133,6 @@ export class SharedService {
     return new Promise((response, reject) => {
       this.http
         .post(`${this.url}/department/newDepartmentTransaction`, object)
-        .subscribe((responseData: ResponseType) => {
-          let isError = this.checkForErr(
-            responseData.status,
-            responseData.message
-          );
-          if (isError) {
-            reject('http request failed' + responseData.message);
-          } else {
-            response(responseData.message);
-          }
-        });
-    });
-  }
-  fetchDepartmentTransactions() {
-    return new Promise((response, reject) => {
-      this.http
-        .get(
-          `${this.url}/department/fetchDepartmentTransactions?id=${this.logedInId}`
-        )
         .subscribe((responseData: ResponseType) => {
           let isError = this.checkForErr(
             responseData.status,
