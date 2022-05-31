@@ -16,74 +16,54 @@ export class DepartmentPageComponent implements OnInit {
   ) {}
   newTransactionForm: FormGroup;
   reciepientID;
-  items: DepartmentTransaction[] = [
-    {
-      transaction_to: 'Deepanshu',
-      transaction_id: '5dtdtyds',
-      transaction_amount: 100,
-      transaction_details:
-        'Sjkhskdhfk khlSDF lkjHKSDK HJKLASHKLH lkjHLKJDS LkhKJFK KJHKHUISD kjHUHK kjHUIDL',
-      transaction_datetime: '03/08/2021:12:02:23',
-    },
-    {
-      transaction_to: 'Deepanshu',
-      transaction_id: '5dtdtyds',
-      transaction_amount: 100,
-      transaction_details:
-        'Sjkhskdhfk khlSDF lkjHKSDK HJKLASHKLH lkjHLKJDS LkhKJFK KJHKHUISD kjHUHK kjHUIDL',
-      transaction_datetime: '03/08/2021:12:02:23',
-    },
-    {
-      transaction_to: 'Deepanshu',
-      transaction_id: '5dtdtyds',
-      transaction_amount: 100,
-      transaction_details:
-        'Sjkhskdhfk khlSDF lkjHKSDK HJKLASHKLH lkjHLKJDS LkhKJFK KJHKHUISD kjHUHK kjHUIDL',
-      transaction_datetime: '03/08/2021:12:02:23',
-    },
-  ];
+  items: DepartmentTransaction[] = [];
   ngOnInit() {
     this.newTransactionForm = new FormGroup({
-      transaction_id: new FormControl(null, Validators.required),
       transaction_amount: new FormControl(null, Validators.required),
-      transaction_details: new FormControl(),
-      transaction_datetime: new FormControl(),
+      transaction_details: new FormControl(null, Validators.required),
+      reciever: new FormControl(null, Validators.required),
+      sender: new FormControl(null),
+      transaction_datetime: new FormControl(null),
     });
     //
-    // this.mainService
-    //   .fetchDepartmentTransactions()
-    //   .then((data: DepartmentTransaction[]) => {
-    //     this.items = data;
-    //   });
+    this.mainService
+      .departmentPreviousTransactions()
+      .then((data: DepartmentTransaction[]) => {
+        this.items = data;
+      });
   }
   onSubmit() {
     console.log(this.newTransactionForm.value);
     this.items.push(this.newTransactionForm.value);
+    this.newDepartmentTransaction();
+    // this.mainService.transactionBroadcast(
+    //   this.newTransactionForm.value.transaction_amount
+    // );
   }
   logout() {
     this.mainService.loginStatus.next(2);
   }
   verifyReciepient() {
-    console.log(this.newTransactionForm.value.transaction_id);
     this.mainService
-      .verifyReciepient(this.newTransactionForm.value.transaction_id)
-      .then((data) => {
-        console.log(data);
+      .verifyReciepient(this.newTransactionForm.value.reciever)
+      .then((data: any) => {
         if (data) {
           this._snackBar.open('User Found', 'close');
+          this.mainService.receiverAddress = data.nodeAddress;
         } else {
           this._snackBar.open('User Not Found', 'close');
         }
       });
   }
   newDepartmentTransaction() {
-    this.newTransactionForm.setValue({
+    this.newTransactionForm.patchValue({
       transaction_datetime: new Date(),
+      sender: this.mainService.nodeAddress,
     });
-    this.mainService
-      .newDepartmentTransaction(this.newTransactionForm.value)
-      .then((data) => {
-        console.log(data);
-      });
+    let obj = this.newTransactionForm.value;
+    obj.reciever = this.mainService.receiverAddress;
+    this.mainService.newDepartmentTransaction(obj).then((data) => {
+      console.log(data);
+    });
   }
 }

@@ -12,11 +12,14 @@ export class DataComponent implements OnInit {
   onSubmit() {}
   TaxForm: FormGroup;
   TaxFieldSet: TaxField;
-  items = ['lll', 'sdf'];
-  addField(value: string) {
-    this.items.push(value);
+  Fields = [];
+
+  addField(category: string, field: string) {
+    this.Fields.push(field);
+    this.mainService.addFieldToCategory(category, field);
   }
   ngOnInit() {
+    this.getCategoryFields('one');
     this.TaxForm = new FormGroup({
       partyName: new FormControl(null),
       setOne: new FormGroup({
@@ -34,7 +37,28 @@ export class DataComponent implements OnInit {
       }),
     });
   }
+  mineNewBlock() {
+    this.mainService.mine().then((data) => {
+      console.log('blockMined');
+    });
+  }
   logout() {
     this.mainService.loginStatus.next(3);
+  }
+  getCategoryFields(category) {
+    console.log('getCategoryFields');
+
+    this.mainService.getFieldsoFCaterory(category).then((arr: any) => {
+      console.log(arr);
+
+      this.Fields = arr.fields;
+      this.Fields.forEach((element) => {
+        this.TaxForm.addControl(
+          element,
+          new FormControl('', Validators.required)
+        );
+      });
+      console.log(this.TaxForm.value);
+    });
   }
 }

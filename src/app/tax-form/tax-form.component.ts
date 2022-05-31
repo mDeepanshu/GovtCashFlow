@@ -13,30 +13,45 @@ export class TaxFormComponent implements OnInit {
 
   TaxForm: FormGroup;
   TaxFieldSet: TaxField;
+  Fields = [];
   ngOnInit() {
-    this.TaxForm = new FormGroup({
-      partyName: new FormControl(null),
-      setOne: new FormGroup({
-        name: new FormControl(0, Validators.required),
-        age: new FormControl(0, Validators.required),
-        family_members: new FormControl(null, Validators.required),
-      }),
-      setTwo: new FormGroup({
-        total_income: new FormControl(),
-        total_sources: new FormControl(2),
-        income_sources: new FormControl(2),
-      }),
-      setThree: new FormGroup({
-        pan_number: new FormControl(null),
-      }),
-    });
+    this.getCategoryFields('one');
+    this.TaxForm = new FormGroup({});
   }
   logout() {
     this.mainService.loginStatus.next(1);
   }
   onSubmit() {
-    this.mainService.submitClientForm(this.TaxForm.value).then((value) => {
+    console.log(this.TaxForm.value);
+    let obj = {
+      transaction_amount: this.TaxForm.value.Total_Income,
+      transaction_details: JSON.stringify(this.TaxForm.value),
+      transaction_datetime: new Date(),
+      reciever: this.mainService.nodeAddress,
+      sender: '',
+    };
+    console.log(obj);
+    this.mainService.submitClientForm(obj).then((value) => {
       console.log(value);
+    });
+    // this.mainService.transactionBroadcast(
+    //   this.TaxForm.value.setTwo.total_income
+    // );
+  }
+  getCategoryFields(category) {
+    console.log('getCategoryFields');
+
+    this.mainService.getFieldsoFCaterory(category).then((arr: any) => {
+      console.log(arr);
+
+      this.Fields = arr.fields;
+      this.Fields.forEach((element) => {
+        this.TaxForm.addControl(
+          element,
+          new FormControl('', Validators.required)
+        );
+      });
+      console.log(this.TaxForm.value);
     });
   }
 }

@@ -2,7 +2,12 @@
   <div class="row mt-1">
     <div class="col">Tax Category You Belongs to:</div>
     <div class="col">
-      <select class="form-select" aria-label="Default select example">
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        (select)="getCategoryFields(category.value)"
+        #category
+      >
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -18,7 +23,30 @@
         (keydown.enter)="$event.preventDefault()"
         #aForm
       >
+        <ul>
+          <li *ngFor="let field of Fields">
+            {{ field }}
+            <input
+              type="text"
+              formControlName="{{ field }}"
+              class="form-control"
+            />
+          </li>
+        </ul>
         <div class="row">
+          <div class="col-2">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 
+  
+ -->
+<!-- <div class="row">
           <div class="col">
             <div class="form-group">
               <label for="name">Name</label>
@@ -39,9 +67,6 @@
                 id="age"
                 placeholder="Age"
               />
-              <!-- <small id="emailHelp" class="form-text text-muted"
-                >We'll never share your email with anyone else.</small
-              > -->
             </div>
           </div>
           <div class="col">
@@ -53,9 +78,6 @@
                 id="family_members"
                 placeholder="Total Family Members"
               />
-              <!-- <small id="emailHelp" class="form-text text-muted"
-                >We'll never share your email with anyone else.</small
-              > -->
             </div>
           </div>
         </div>
@@ -106,13 +128,4 @@
               />
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-2">
-            <button class="btn btn-primary" type="submit">Submit</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+        </div> -->

@@ -12,5 +12,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {}
   logout() {
     this.mainService.loginStatus.next(0);
+    this.mainService.nodeAddress = null;
   }
 }
